@@ -1,5 +1,3 @@
-import Trip from "../pages/Trip/Trip";
-
 export type InputInfo = {
   inputName: string;
   label?: string;
@@ -9,6 +7,7 @@ export type InputInfo = {
   dataAtribute?: string;
   value?: string | number;
   placeholder?: string;
+  min?: string;
 };
 
 export type TripType = {

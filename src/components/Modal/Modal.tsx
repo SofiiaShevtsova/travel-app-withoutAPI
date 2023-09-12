@@ -4,6 +4,7 @@ import { AppContext } from "../../App";
 import { TripType, InputInfo, BookingsTrip } from "../../commons/types";
 import {ButtonIcon, CardInfo, Form} from "../commons";
 import { ModalBox, ContectBox, Total } from "./modal_styles";
+import { setStartDate } from "../../helpers/setStartDate";
 
 export const Modal = ({ trip, setOpen }: { trip: TripType; setOpen: Function }) => {
   const [date, setDate] = useState("");
@@ -22,6 +23,7 @@ export const Modal = ({ trip, setOpen }: { trip: TripType; setOpen: Function }) 
       errorsMessage: "Choice a date!",
       type: "date",
       dataAtribute: "book-trip-popup-date",
+      min: setStartDate(),
     },
     {
       inputName: "guests",

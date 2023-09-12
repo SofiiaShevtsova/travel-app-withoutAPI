@@ -2,11 +2,12 @@ import { ChangeEvent, useState, useEffect, useContext } from "react";
 import { FiSearch } from "react-icons/fi";
 
 import list from "../../data/trips.json";
-import bookings from '../../data/booking.json';
+import bookings from "../../data/booking.json";
 import { AppContext } from "../../App";
 import { BookingsTrip, TripType } from "../../commons/types";
 import { Input, Select, Card, Container } from "../../components/commons";
 import { MainBox, FilterBox, InputBox, TripList } from "./main_styles";
+import { filterList } from "../../helpers/sortList";
 
 const selectsArray = [
   {
@@ -44,36 +45,13 @@ const Main = () => {
   useEffect(() => {
     setList && setList(arrayTrips);
     setBooking && setBooking(arrayBooking);
-    setUser && setUser('')
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    setUser && setUser("");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (tripsList) {
-      let newList: TripType[] = tripsList;
-      newList = query
-        ? newList.filter(
-            (trip) =>
-              trip.title.toLowerCase().search(query.toLowerCase()) !== -1
-          )
-        : newList;
-      newList =
-        level !== "" ? newList.filter((trip) => trip.level === level) : newList;
-      newList =
-        duration !== ""
-          ? newList.filter((trip) => {
-              switch (duration) {
-                case "0_x_5":
-                  return trip.duration < 6;
-                case "5_x_10":
-                  return trip.duration < 11 && trip.duration > 5;
-                case "10_x":
-                  return trip.duration > 10;
-                default:
-                  break;
-              }
-            })
-          : newList;
+      const newList = filterList({ query, level, duration, tripsList });
       setListFiltred(newList);
     }
   }, [query, level, duration, tripsList]);
